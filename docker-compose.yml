@@ -1,0 +1,38 @@
+version: '3'
+
+services:
+  postgres:
+    container_name: folha_dirigida_db
+    restart: unless-stopped
+    image: mdillon/postgis:11
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: folha_dirigida
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+  api:
+    container_name: folha_dirigida
+    restart: unless-stopped
+    build: .
+    volumes:
+      - '.:/app'
+    ports:
+      - "4000:4000"
+    depends_on:
+      - postgres
+    environment:
+      MIX_ENV: "dev"
+      DOCKER: "true"
+      INSTANCE_NAME: My folha_dirigida Instance
+      DATABASE_PASSWORD: postgres
+      DATABASE_USERNAME: postgres
+      DATABASE_DBNAME: folha_dirigida
+      DATABASE_HOST: postgres
+    command: >
+      sh -c "mix deps.get &&
+      mix compile &&
+      mix ecto.reset &&
+      mix phx.server"
+volumes:
+  pgdata:
+  .:

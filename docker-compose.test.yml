@@ -1,0 +1,17 @@
+version: '3'
+
+services:
+  postgres:
+    restart: "no"
+    environment:
+      POSTGRES_DB: folha_dirigida_test
+  api:
+    restart: "no"
+    environment:
+      MIX_ENV: "test"
+      DATABASE_DBNAME: folha_dirigida_test
+      INSTANCE_HOST: folha_dirigida.test
+    command: "mix test"
+volumes:
+  pgdata:
+  .:
