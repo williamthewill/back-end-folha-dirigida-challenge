@@ -38,6 +38,12 @@ defmodule ApiFolhaDirigidaWeb.Endpoint do
     pass: ["*/*"],
     json_decoder: Phoenix.json_library()
 
+  plug(Corsica,
+    origins: "*",
+    log: [rejected: :error, invalid: :warn, accepted: :debug],
+    allow_credentials: true
+  )
+
   plug Plug.MethodOverride
   plug Plug.Head
   plug Plug.Session, @session_options

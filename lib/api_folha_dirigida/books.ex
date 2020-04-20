@@ -3,7 +3,7 @@ defmodule ApiFolhaDirigida.Books do
   import Ecto.Changeset
 
   @doc since: "1.0.0"
-  @derive {Poison.Encoder, only: [:name, :price, :synopsis, :image, :authors, :categories]}
+  @derive {Poison.Encoder, only: [:id, :name, :price, :synopsis, :image, :authors, :categories]}
   schema "books" do
     field(:name, :string)
     field(:price, :float)
